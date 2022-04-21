@@ -32,8 +32,7 @@ def main(mytimer: func.TimerRequest, outdoc: func.Out[func.Document]):
 
     try:
         # Get Blog feeds
-        outdata = {}
-        outdata['items'] = get_feed()
+        outdata = {'items': get_feed()}
         # logging.info(outdata)  # for debug
 
         # Store output data using Cosmos DB output binding

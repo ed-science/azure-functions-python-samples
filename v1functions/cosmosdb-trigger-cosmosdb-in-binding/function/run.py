@@ -9,6 +9,6 @@ print(inputCosmosdb)
 docObjects = json.loads(inputCosmosdb)
 
 # Dump documents
-print("Document Count={}".format(len(docObjects)))
+print(f"Document Count={len(docObjects)}")
 for doc in docObjects:
     print(doc)

@@ -40,7 +40,7 @@ def run_inference(image, context):
     image = image.resize((224, 224), Image.LANCZOS)
     bands = image.getbands()
     if bands == ('R', 'G', 'B'):
-        logging.info(f'Image is RGB. No conversion necessary.')
+        logging.info('Image is RGB. No conversion necessary.')
     else:
         logging.info(f'Image is {bands}, converting to RGB...')
         image = image.convert('RGB')
@@ -62,11 +62,9 @@ def run_inference(image, context):
     height = int(max_width * original_image_size[1] / original_image_size[0])
     # Upsample and correct aspect ratio for final image
     img = img.resize((max_width, height), Image.BICUBIC)
-    
+
     # Store inferred image as in memory byte array
     img_byte_arr = io.BytesIO()
     # Convert composite to RGB so we can return JPEG
     img.convert('RGB').save(img_byte_arr, format='JPEG')
-    final_image = img_byte_arr.getvalue()
-
-    return final_image
+    return img_byte_arr.getvalue()

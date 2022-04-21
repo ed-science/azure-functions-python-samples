@@ -27,7 +27,7 @@ def main(myblob: func.InputStream, doc: func.Out[func.Document]):
     img_data = myblob.read()
     try:
         api_url = "{0}vision/v1.0/analyze?{1}".format(api_endpoint, params)
-        logging.info("API URL:{}".format(api_url))
+        logging.info(f"API URL:{api_url}")
 
         r = requests.post(api_url,
                     headers=headers,
@@ -38,8 +38,7 @@ def main(myblob: func.InputStream, doc: func.Out[func.Document]):
         logging.info(json.dumps(parsed, sort_keys=True, indent=2))
 
         # Set output data
-        outdata = {}
-        outdata['name'] = myblob.name
+        outdata = {'name': myblob.name}
         taglist = parsed['description']['tags']
         outdata['text'] =  ' '.join(taglist)
         logging.info(json.dumps(outdata, sort_keys=True, indent=2))

@@ -139,7 +139,7 @@ def main(req: func.HttpRequest) -> str:
         if ss[0] == 'AccountName':
            storage_account = ss[1] 
         if ss[0] == 'AccountKey':
-           storage_key = ss[1] 
+           storage_key = ss[1]
     if not storage_account or not storage_key:
         return write_http_response(
             400,
@@ -166,7 +166,7 @@ def main(req: func.HttpRequest) -> str:
         )
     else:
         # Case: Exception raised in get_json()
-        if not 'req_body' in locals():
+        if 'req_body' not in locals():
             return write_http_response(
                 400,
                 { 'message': 'Invalid HTTP request body' }
@@ -198,8 +198,11 @@ def main(req: func.HttpRequest) -> str:
                         token_ttl, 
                         container_name, 
                         blob_name 
-                    )  
-    logging.info("Generated Token token=>{} url=>{}".format(token_dict['token'], token_dict['url']))
+                    )
+    logging.info(
+        f"Generated Token token=>{token_dict['token']} url=>{token_dict['url']}"
+    )
+
 
     # Write HTTP Response
     return write_http_response(200, token_dict)

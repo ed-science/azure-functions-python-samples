@@ -20,7 +20,7 @@ def main(blobin: func.InputStream, blobout: func.Out[bytes], context: func.Conte
     logging.info(f"--- Python blob trigger function processed blob \n"
                  f"----- Name: {blobin.name}\n"
                  f"----- Blob Size: {blobin.length} bytes")
-    
+
     # Pillow calls blobin.read() so only
     # pass in the image object
     input_image = blobin
@@ -51,7 +51,7 @@ def main(blobin: func.InputStream, blobout: func.Out[bytes], context: func.Conte
 
     # Watermark anchor (left, top)
     position = (16, 16)
-    
+
     img = Image.new('RGBA', (base_image.width, base_image.height), (0, 0, 0, 0))
     img.paste(base_image, (0, 0))
     # Watermark may not have an alpha channel,
@@ -84,4 +84,4 @@ def main(blobin: func.InputStream, blobout: func.Out[bytes], context: func.Conte
     # Set blob content from byte array in memory
     blobout.set(img_byte_arr.getvalue())
 
-    logging.info(f"----- Watermarking successful")
+    logging.info("----- Watermarking successful")

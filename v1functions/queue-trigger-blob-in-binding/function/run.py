@@ -4,10 +4,8 @@ import os
 blob_name = open(os.environ['inputMessage']).read()
 print("Blob file name: '{0}'".format(blob_name))
 
-######################### 2: READ BLOB FILE ##################################
-input_file = open(os.environ['inputBlob'], 'r')
-clear_text = input_file.read()
-input_file.close()
+with open(os.environ['inputBlob'], 'r') as input_file:
+    clear_text = input_file.read()
 print("Content in the blob file: '{0}'".format(clear_text))
 
 ######################### 3: PROCESS THE CONTENT #############################

@@ -2,9 +2,9 @@ import logging
 import azure.functions as func
 
 def _rot13(c):
-    if 'A' <= c and c <= 'Z':
+    if 'A' <= c <= 'Z':
         return chr((ord(c) - ord('A') + 13) % 26 + ord('A'))
-    if 'a' <= c and c <= 'z':
+    if 'a' <= c <= 'z':
         return chr((ord(c) - ord('a') + 13) % 26 + ord('a'))
     return c
 

@@ -120,13 +120,13 @@ def generate_sas_token (storage_account, storage_key, permission, token_ttl, con
 env = os.environ
 DEFAULT_METHOD = "GET"
 http_method = env['REQ_METHOD'] if env.has_key('REQ_METHOD') else DEFAULT_METHOD
-print("http_method={}".format(http_method))
+print(f"http_method={http_method}")
 
 # Get Azure Storage Connection String
 storage_account = None
 storage_key = None
 connString = env[_AZURE_STORAGE_CONN_STRING_ENV_NAME]
-print("connString={}".format(connString))
+print(f"connString={connString}")
 ll = connString.split(';')
 for l in ll:
     ss = l.split('=',1)
@@ -135,7 +135,7 @@ for l in ll:
     if ss[0] == 'AccountName':
        storage_account = ss[1] 
     if ss[0] == 'AccountKey':
-       storage_key = ss[1] 
+       storage_key = ss[1]
 if not storage_account or not storage_key:
     write_http_response(400, 
         { 'message': 'Function configuration error: NO Azure Storage connection string found!' }
@@ -151,7 +151,7 @@ if http_method.lower() !=_ALLOWED_HTTP_METHOD.lower():
 
 # Get Request Parameters: permission, container, blobname (optional)
 req_body_s = open(env[_AZURE_FUNCTION_HTTP_INPUT_ENV_NAME], "r").read()
-print("REQUEST BODY => {}".format(req_body_s))
+print(f"REQUEST BODY => {req_body_s}")
 req_body_dict = json.loads(req_body_s)
 if "permission" not in req_body_s or "container" not in req_body_s:
     write_http_response(400, 
@@ -161,9 +161,7 @@ if "permission" not in req_body_s or "container" not in req_body_s:
 
 permission = req_body_dict['permission']
 container_name = req_body_dict['container']
-blob_name = None
-if "blobname" in req_body_dict:
-    blob_name = req_body_dict['blobname']
+blob_name = req_body_dict['blobname'] if "blobname" in req_body_dict else None
 token_ttl = _SAS_TOKEN_DEFAULT_TTL
 if "ttl" in req_body_dict:
     token_ttl = int(req_body_dict['ttl'])
@@ -174,8 +172,8 @@ if "ttl" in req_body_dict:
         sys.exit(0)
 
 # Generate SAS Token
-token_dict = generate_sas_token(storage_account, storage_key, permission, token_ttl, container_name, blob_name )  
-print("Generated Token token={} url={}".format(token_dict['token'], token_dict['url']))
+token_dict = generate_sas_token(storage_account, storage_key, permission, token_ttl, container_name, blob_name )
+print(f"Generated Token token={token_dict['token']} url={token_dict['url']}")
 
 # Write HTTP Response
 write_http_response(200, token_dict)

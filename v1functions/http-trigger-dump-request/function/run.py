@@ -34,17 +34,17 @@ env = os.environ
 
 # Get HTTP METHOD
 http_method = env['REQ_METHOD'] if 'REQ_METHOD' in env else _AZURE_FUNCTION_DEFAULT_METHOD
-print("HTTP METHOD => {}".format(http_method))
+print(f"HTTP METHOD => {http_method}")
 
 # Get QUERY STRING
 req_url = env['REQ_HEADERS_X-ORIGINAL-URL'] if 'REQ_HEADERS_X-ORIGINAL-URL' in env else ''
-urlparts =req_url.split('?') 
+urlparts =req_url.split('?')
 query_string = urlparts[1] if len(urlparts) == 2 else ''
-print("QUERY STRING => {}".format(query_string))
+print(f"QUERY STRING => {query_string}")
 
 if http_method.lower() == 'post':
     request_body = open(env[_AZURE_FUNCTION_HTTP_INPUT_ENV_NAME], "r").read()
-    print("REQUEST BODY => {}".format(request_body))
+    print(f"REQUEST BODY => {request_body}")
 
 res_body = {}
 print("Dump ENVIRONMENT VARIABLES:")

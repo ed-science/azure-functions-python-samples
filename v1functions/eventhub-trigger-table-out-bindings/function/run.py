@@ -28,7 +28,7 @@ Expected Function's Output Configuration:
 receivedBody = json.loads(open(os.environ['myEventHubMessage']).read())
 print('Received body:', receivedBody)
 # -> ('received object:', {u'deviceId': u'myDevice0001', u'temperature': u'10.1'})
-if not 'deviceId' in receivedBody or not 'temperature' in receivedBody:
+if 'deviceId' not in receivedBody or 'temperature' not in receivedBody:
     print("Skip: invalid eventHub body!")
     sys.exit(0)
 
